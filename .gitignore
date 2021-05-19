@@ -10,9 +10,8 @@ __pycache__/
 *.xlsb
 *.xlsm
 
-# evitando arquivos log e texto
+# evitando arquivos log e csv
 *.log
-*.txt
 *.csv
 
 # tirar pastas do ambiente virtual

@@ -1,0 +1,17 @@
+cffi==1.14.5
+cryptography==3.4.7
+cx-Oracle==8.2.0
+greenlet==1.1.0
+importlib-metadata==4.0.1
+jeepney==0.6.0
+keyring==23.0.1
+keyrings.alt==4.0.2
+numpy==1.20.3
+pandas==1.2.4
+pycparser==2.20
+python-dateutil==2.8.1
+pytz==2021.1
+SecretStorage==3.3.1
+six==1.16.0
+SQLAlchemy==1.4.15
+zipp==3.4.1
