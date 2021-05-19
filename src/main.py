@@ -1,4 +1,3 @@
-import os
 import argparse
 import cx_Oracle
 from sqlalchemy import create_engine
