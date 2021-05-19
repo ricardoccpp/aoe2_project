@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# exception
+!.gitignore
+
+# evitando que arquivos excel subam
+*.xls
+*.xlsx
+*.xlsb
+*.xlsm
+
+# evitando arquivos log e texto
+*.log
+*.txt
+*.csv
+
+# tirar pastas do ambiente virtual
+venv/
+
+# tirar pastas do visual studio code
+.vscode/
+.idea/
