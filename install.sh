@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-PROJECT_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 if [ -d $PROJECT_DIR/venv ]
 then
