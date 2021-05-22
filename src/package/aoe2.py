@@ -24,4 +24,5 @@ def get_labels(subject='civ', language='en'):
     url = f'https://aoe2.net/api/strings?game=aoe2de&language={language}'
     with request.urlopen(url) as response:
         data = json.loads(response.read())
-    return pd.DataFrame(data.get(subject))
+    df = pd.DataFrame(data.get(subject))
+    return df

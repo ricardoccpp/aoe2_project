@@ -3,6 +3,7 @@ import cx_Oracle
 from sqlalchemy import create_engine
 import pandas as pd
 import keyring
+from datetime import datetime
 
 from package.aoe2 import get_games, get_labels
 
@@ -29,6 +30,7 @@ def load_string_tables():
     subjects = ['civ', 'map_size', 'map_type', 'leaderboard', 'rating_type']
     for subject in subjects:
         df = get_labels(subject=subject, language='en')
+        df['dt_load'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         df.to_sql(f'stg_aoe2_{subject}', get_oracle_engine(), if_exists='replace', index=False)
 
 
@@ -52,6 +54,7 @@ def load_matches_table(game_count=1000):
 
     df = pd.concat([get_games(player_id=player.get('player_id'), num_games=game_count) for player in players], ignore_index=True)
     df.drop_duplicates(inplace = True)
+    df['dt_load'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     all_columns = list(df)
     df[all_columns] = df[all_columns].astype(str)
     df[:0].to_sql('stg_aoe2_matches', get_oracle_engine(), if_exists='replace', index=False, chunksize=100)
@@ -64,8 +67,8 @@ def load_matches_table(game_count=1000):
         cursor = conn.cursor()
         cursor.executemany('''
         INSERT INTO ADMIN.STG_AOE2_MATCHES
-        (PROFILE_ID, STEAM_ID, NAME, CLAN, COUNTRY, SLOT, SLOT_TYPE, RATING, RATING_CHANGE, GAMES, WINS, STREAK, DROPS, COLOR, TEAM, CIV, WON, MATCH_ID, OPENED, STARTED, FINISHED, MAP_TYPE, RANKED, MAP_SIZE, LEADERBOARD_ID, RATING_TYPE, ABERTURA, INICIO, FIM)
-        VALUES(:1, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11, :12, :13, :14, :15, :16, :17, :18, :19, :20, :21, :22, :23, :24, :25, :26, :27, :28, :29)
+        (PROFILE_ID, STEAM_ID, NAME, CLAN, COUNTRY, SLOT, SLOT_TYPE, RATING, RATING_CHANGE, GAMES, WINS, STREAK, DROPS, COLOR, TEAM, CIV, WON, MATCH_ID, OPENED, STARTED, FINISHED, MAP_TYPE, RANKED, MAP_SIZE, LEADERBOARD_ID, RATING_TYPE, ABERTURA, INICIO, FIM, DT_LOAD)
+        VALUES(:1, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11, :12, :13, :14, :15, :16, :17, :18, :19, :20, :21, :22, :23, :24, :25, :26, :27, :28, :29, :30)
         ''', df.to_records(index=False).tolist())
         conn.commit()
 
